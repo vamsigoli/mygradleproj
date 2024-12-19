@@ -4,3 +4,25 @@
  * This is a general purpose Gradle build.
  * Learn more about Gradle by exploring our Samples at https://docs.gradle.org/8.11.1/samples
  */
+
+final var globalBuildGroup = 'My global build'
+final var ciBuildGroup = 'My CI Build'
+
+
+//list tasks that belong to only globalBuildGroup
+tasks.named("tasks", TaskReportTask) {
+    displayGroup = globalBuildGroup
+}
+
+//qualityCheckAll can be invoked by developer for quality checks
+//without invoking the tests
+tasks.register("qualityCheckAll") {
+    group = globalBuildGroup
+    dependsOn(subprojects.collect {":${it.name}:qualityCheck"})
+}
+
+//this checkAll task will be invoked by the CI configuration
+tasks.register("checkAll") {
+    group = ciBuildGroup
+    dependsOn(subprojects.collect {":${it.name}:check"})
+}

@@ -6,3 +6,53 @@ plugins {
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }
+
+tasks.test {
+    useJUnitPlatform()
+    testLogging.showStandardStreams = true
+}
+
+dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+final var myBuildGroup = "my project build"
+
+//get the tasks that are named tasks of the type TaskReportTask
+// and tell those tasks that the display group is  myBuildGroup only
+//by this, only tasks that have group as myBuildGroup will be displayed by tasks task.
+//as this is in the my-java-base, it is applied across all the java plugins.
+
+tasks.named("tasks",TaskReportTask) {          // Move all existing tasks to the group
+    displayGroup = myBuildGroup
+}
+
+tasks.register( "tasksAll",TaskReportTask) {    // Register the tasksAll task
+    group = myBuildGroup
+    description = "Show additional tasks."
+    setShowDetail(true)
+}
+
+//as the below task is only dependent on checkStyleMain and checkStyleTests
+//when we invoke ./gradlew :app:qualityCheck it runs the tasks.classes which complies the java files
+//and then runs the checkstyleMain. it will NOT run the tests as this task is not dependent on the
+//verification task test
+
+tasks.register("qualityCheck") {
+    group = myBuildGroup
+    description = "Run checks (excluding tests)"
+    dependsOn(tasks.classes, tasks.checkstyleMain)
+    dependsOn(tasks.testClasses,tasks.checkstyleTest)
+}
+
+
+tasks.build {
+    group = myBuildGroup;
+}
+
+tasks.check {
+    group = myBuildGroup;
+    description = "Run checks (including tests)"
+}

@@ -3,7 +3,12 @@
 In a brand new directory do a gradle init. settings.gradle is the only file that should be required 
 to be identified as a new project.
 
+./gradle <task> --console=plain  gives a detailed task level output instead of gradle decided output
 
+you can abbreviate tasks. ./gradlew :qualityCheckAll can be abbreviated as ./gradlew :qCA
+
+also do not run a task without a colon. gradle will search for the name in all submodules and executes it
+so ./gradlew qualityCheckAll is not a best practice. Instead do a ./gradlew :qualityCheckAll
 
 buildSrc is a separate build whose purpose is to build any tasks, plugins, or other classes which are intended to be used in build scripts of the main build, but don't have to be shared across builds.(*) It wouldn't be possible to build such classes as part of the main build, because they have to exist before the main build's build scripts can even be compiled/evaluated, and Gradle compiles/evaluates all build scripts before it does any work (configuration vs. execution phase).
 
@@ -14,4 +19,26 @@ buildSrc is more often seen in multi-project builds simply because larger builds
 Over time, buildSrc will grow into a more general capability of executing multiple dependent builds in a single Gradle invocation.
 
 (*) Sharing classes across builds is possible but more involved. In particular, you'll need to publish the classes to a repository, and consuming builds have to explicitly import them from there, similar to when sharing production libraries between builds.
-  
+
+settings.gradle has the include section that lists the projects in the build
+
+plugins provide different tasks that can be available to the project. 
+for example, the java application plugin provides the application group tasks in which run is one of them so that you can use 
+gradle :app:run if app is the subproject which has the java-application plugin added
+
+also, the module which has java-application plugin added can use the application {} syntax to add the main class.
+
+dependencies section in the gradle file gives the various other modules on which the current module is dependent on
+
+if you run ./gradlew :app:tasks , gradle lists all the tasks that are available to run. It has a big list which is confusing to
+the users. tasks itself is a task in gradle. so we can configure this task to list only a limited set of display groups.
+
+we did this as part of the java base plugin. the same thing can be extended to the root level also. 
+
+if we say ./gradlew :tasks the gradle system lists all the projects tasks. if any display groups are setup, those rules are 
+followed as well. If we say ./gradlew :tasks --all , we get all the tasks that can be applied to all modules of the project.
+
+if we want to configure the tasks displayed for the global project leve, we have to configure build.gradle at the root project leve.
+the recommendation is to use the build.gradle file just for this purpose only
+
+

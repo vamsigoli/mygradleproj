@@ -2,3 +2,10 @@ plugins {
     id 'my-java-base'
     id 'application'
 }
+
+final var myBuildGroup = "my project build"
+
+tasks.run {
+    group = myBuildGroup;
+}
+
