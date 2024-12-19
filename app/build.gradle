@@ -1,0 +1,11 @@
+plugins {
+    id 'my-java-application'
+}
+
+application {
+    mainClass = 'mygradleproj.app.MyApplication'
+}
+
+dependencies {
+    implementation(project(":business-logic"))
+}
