@@ -5,7 +5,26 @@ plugins {
 
 final var myBuildGroup = "my project build"
 
+var packageAppTask = tasks.register("packageApp", Zip) {
+    from(layout.projectDirectory.file("run.sh"))
+    from(tasks.jar) {
+        into("libs")
+    }
+
+    from(configurations.runtimeClasspath) {
+        into("libs")
+    }
+
+    destinationDirectory = layout.buildDirectory.dir("dist")
+    archiveFileName = "myApplication.zip"
+}
+
 tasks.run {
     group = myBuildGroup;
 }
+
+tasks.build {
+    dependsOn(packageAppTask)
+}
+
 

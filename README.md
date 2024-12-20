@@ -41,4 +41,17 @@ followed as well. If we say ./gradlew :tasks --all , we get all the tasks that c
 if we want to configure the tasks displayed for the global project leve, we have to configure build.gradle at the root project leve.
 the recommendation is to use the build.gradle file just for this purpose only
 
+read about the difference between life cycle tasks and actionable tasks in gradle
 
+actionable tasks work on the input and output. inputs and outputs tell gradle about the dependencies of the tasks.
+incremental build is possible due to the gradle knowing about the inputs and outputs. if the inputs dont change, gradle can
+get the results from the previous run or from build cache.
+
+we try to do a actionable task in the project to build the application jar ourselves which is provided by gradle built in
+ideally any actionable tasks should be tied up to lifecycle tasks and the end users should call only lifecycle tasks.
+
+In our example, the task packageApp which is a clone of assemble should be tied up to build lifecycle
+
+also check the usage of run.sh where we used lib/* for -cp input
+
+https://docs.oracle.com/en/java/javase/21/docs/specs/man/java.html gives the provision of * for class path entires

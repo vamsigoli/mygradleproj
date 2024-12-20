@@ -39,6 +39,7 @@ tasks.register( "tasksAll",TaskReportTask) {    // Register the tasksAll task
 //when we invoke ./gradlew :app:qualityCheck it runs the tasks.classes which complies the java files
 //and then runs the checkstyleMain. it will NOT run the tests as this task is not dependent on the
 //verification task test
+//this is a lifecycle task
 
 tasks.register("qualityCheck") {
     group = myBuildGroup
