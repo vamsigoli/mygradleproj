@@ -1,9 +1,33 @@
+import mygradleproj.tasks.CreateAFileTask
+
 plugins {
     id 'my-java-application'
 }
 
 application {
     mainClass = 'mygradleproj.app.MyApplication'
+}
+
+
+tasks.named("createAFileTask", CreateAFileTask) {
+    fileText = "Hello from the named method" //override with custom message
+}
+
+//or use the clean syntax as below task
+
+
+//we are building our own jar maker for the application
+//generateStartScript task is tied to build life cycle in the my-java-application plugin
+//below is one way of configuring a task created in the plugin. but the correct way of configuring is through
+//extension. so we created an extension MyAppExtension that has a extension point of defining main class
+//we can use that extension point to create the main class. the GenerateStartScript uses the
+//property supplied thorough the extension point to configure the mainClass  as part of the plugin code.
+//tasks.generateStartScript {
+//    mainClass = 'mygradleproj.app.MyApplication'
+//}
+
+myApp {
+    mainClass = "mygradleproj.app.MyApplication"
 }
 
 dependencies {

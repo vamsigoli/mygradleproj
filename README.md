@@ -55,3 +55,19 @@ In our example, the task packageApp which is a clone of assemble should be tied 
 also check the usage of run.sh where we used lib/* for -cp input
 
 https://docs.oracle.com/en/java/javase/21/docs/specs/man/java.html gives the provision of * for class path entires
+
+
+# Type of builds
+The example project iam doing here is using buildSrc. Another type of builds is also supported called composite builds.
+Check the gradle user manual section Structuring Builds
+
+# Building tasks
+Generally custom tasks are abstract classes extending Default task interface. As each task as inputs, action and outputs
+we specify the same in the task through the annotations. also to be dynamic, gradle uses Property and Provider concepts.
+check the user guide
+
+# Gradle managed properties
+Gradle managed properties allow you to declare properties **AS ABSTRACT GETTERS (Java , Groovy) or abstract properties kotlin**
+see the property declaration in the groovy tasks defined. if they are not defined in the way we have it, they are not recognized
+as properties
+

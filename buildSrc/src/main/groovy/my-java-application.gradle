@@ -1,12 +1,29 @@
+import mygradleproj.tasks.*
+
 plugins {
     id 'my-java-base'
     id 'application'
 }
 
+def myApp = extensions.create("myApp",MyAppExtension)
+
+def generateStartScript = tasks.register("generateStartScript",GenerateStartScript) {
+    mainClass.convention(myApp.mainClass)
+    scriptFile = layout.projectDirectory.file("run.sh")
+}
+
+tasks.register("createAFileTask", CreateAFileTask) {
+    group = "custom"
+    description = "creating myfile.txt in the current directory"
+    fileText.convention("Hello from the create file task method")
+}
+
 final var myBuildGroup = "my project build"
 
 var packageAppTask = tasks.register("packageApp", Zip) {
-    from(layout.projectDirectory.file("run.sh"))
+    from(generateStartScript)
+//    from(layout.projectDirectory.file("run.sh"))
+
     from(tasks.jar) {
         into("libs")
     }

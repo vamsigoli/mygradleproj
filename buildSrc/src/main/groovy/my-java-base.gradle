@@ -1,3 +1,9 @@
+//the below import is required. otherwise gradle build
+//is complaining. also do a ./gradlew --stop and clean cache if required
+//gradlew has some difficulty in getting visibility to these classes
+
+import mygradleproj.tasks.*
+
 plugins {
     id 'java'
     id 'checkstyle'
@@ -57,3 +63,5 @@ tasks.check {
     group = myBuildGroup;
     description = "Run checks (including tests)"
 }
+
+tasks.register("myCustomTask", MyIntroTask)

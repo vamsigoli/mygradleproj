@@ -1,1 +1,1 @@
-java -cp 'libs/*' mygradleproj.app.MyApplication
+java -cp 'libs/*' mygradleproj-test.app.MyApplication
