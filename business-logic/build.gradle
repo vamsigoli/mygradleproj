@@ -3,7 +3,11 @@ plugins {
 }
 
 dependencies {
-    implementation(project(':data-model'))
-    implementation("org.apache.commons:commons-lang3:3.9")
+    //implementation(project(':data-model'))
+    api("com.vamsi.my-app:data-model")
+    implementation("com.vamsi.my-app:shared-utils")
+    implementation("org.apache.commons:commons-lang3")
+    implementation("org.slf4j:slf4j-api")
+
 
 }

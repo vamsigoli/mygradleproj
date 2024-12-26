@@ -71,3 +71,18 @@ Gradle managed properties allow you to declare properties **AS ABSTRACT GETTERS 
 see the property declaration in the groovy tasks defined. if they are not defined in the way we have it, they are not recognized
 as properties
 
+# Dependencies usage
+Gradle represents the scope of a dependency with the help of a configuration. Every configuration
+can be identified by a unique name, for example, api, implementation, compileOnly etc
+
+To get the dependencies of a module we run
+
+
+./gradlew :app:dependencies
+
+This will list all the dependencies graphs for types of configurations. 
+if we want dependencies for one particular configuration, we run the command
+
+./gradlew :app:dependencies --configuration=compileClasspath
+
+
