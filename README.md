@@ -85,4 +85,15 @@ if we want dependencies for one particular configuration, we run the command
 
 ./gradlew :app:dependencies --configuration=compileClasspath
 
+platform vs catalog difference in the context of version declaration nincely explained
+in https://docs.gradle.org/current/userguide/centralizing_catalog_platform.html
+
+and also in understanding gradle video #9
+
+conflict resolution is discussed in video 10. 
+
+couple of cheat sheets are added to this repository and downloaded to laptop as well.
+
+
+
 
